@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import readExcelService from '../service/loadData';
+import { importDataJob } from '../service/loadData';
 
 //CONFIG
 dotenv.config();
@@ -23,21 +23,11 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 //ROUTERS
-app.get('/', async (req: Request, res: Response) => {
-    try {
-        const data = await readExcelService();
-        res.status(200).json({
-            message: "server is up",
-            data: data
-        });
-    } catch (error) {
-        console.error(`Error fetching data: ${error}`);
-        res.status(500).json({
-            message: "Internal Server Error"
-        });
-    }
-});
+
+
 //START SERVER 
+importDataJob().then( () => {
 app.listen(port,() => {
     console.log(`-- > Application started on http://localhost:${port} < --`);
+})
 })

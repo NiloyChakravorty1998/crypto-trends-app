@@ -6,6 +6,7 @@
   },
   "author": "Niloy Chakravorty",
   "dependencies": {
+    "@prisma/client": "^5.5.2",
     "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.19.5",
     "@types/cors": "^2.8.16",

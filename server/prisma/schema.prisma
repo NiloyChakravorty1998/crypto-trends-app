@@ -10,6 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model FinanceData {
+  Id Int @id @default(autoincrement())
+  Date String
+  BTC String
+  NYSE String
+  LSE String
+  BTC_Volume String
+  NYSE_Volume String
+  LSE_Volume String
+}
+
 
 
 
