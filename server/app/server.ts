@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { importDataJob } from '../service/loadData';
+import volRouter from '../routes/volumeTrend';
 
 //CONFIG
 dotenv.config();
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 //ROUTERS
-
+app.use('/trend/volume', volRouter);
 
 //START SERVER 
 importDataJob().then( () => {

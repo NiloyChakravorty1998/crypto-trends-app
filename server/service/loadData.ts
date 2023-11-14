@@ -1,12 +1,11 @@
 import dotenv from 'dotenv';
 import fs from 'fs';
 import csvParser from 'csv-parser';
-import { PrismaClient } from '.prisma/client';
 import { CSVData } from '../interfaces/CSVData';
+import { deleteAllData, insertAllData } from '../repo/loadDataRepo';
 
 // CONFIGURATION
 dotenv.config();
-const prisma = new PrismaClient();
 
 // READ DATA FROM EXCEL
 function readExcelService(): Promise<any[]> {
@@ -33,7 +32,7 @@ function readExcelService(): Promise<any[]> {
 // DELETE ALL DATA FROM DB TABLE
 async function purgeDataService() {
     console.log(`Starting to purge all existing records`)
-    await prisma.financeData.deleteMany();
+    await deleteAllData();
 }
 
 // IMPORT DATA TO DB TABLE
@@ -62,13 +61,8 @@ async function importDataJob() {
     }
     // DB INSERT
     console.log(`Starting DATA insertion`)
-    await prisma.financeData.createMany(
-        {
-            data : uploadData
-        }
-    );
+    await insertAllData(uploadData);
     console.log(`Finished Data Load`)
-    prisma.$disconnect;
 }
 
 export {readExcelService, importDataJob, purgeDataService};
