@@ -17,7 +17,6 @@ async function getVolumeTrend(startDate : string, endDate : string) {
             }
         }
     })
-
     return data;
 }
 
