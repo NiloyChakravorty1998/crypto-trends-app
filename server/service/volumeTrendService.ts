@@ -6,13 +6,12 @@ import getVolumeTrend from '../repo/volumeRepo';
 async function volumeTrendService(req:Request, res: Response)
 {
     // EXTRACT REQUEST BODY
-    const reqBody : RequestData = req.body;
-
+    const {startDate, endDate} : RequestData = req.body;
     //DB OPERATION TO GET DATA
-    const data : CSVData [] = await getVolumeTrend(reqBody.startDate, reqBody.endDate);
+    const data : CSVData [] = await getVolumeTrend(startDate,endDate);
     //RETURN DATA
-    res.json(200).json({
-        data 
+    res.status(200).json({
+        volumeTrend : data 
     })
 }
 
