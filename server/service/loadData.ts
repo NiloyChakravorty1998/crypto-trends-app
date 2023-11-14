@@ -43,21 +43,32 @@ async function importDataJob() {
     const data = await readExcelService();
     console.log(`Fetched data from CSV`);
     
-    data.forEach( async (element : CSVData) => {
-        
-        await prisma.financeData.createMany({
-            data : {
-                Date: element.Date,
-                BTC : element.BTC,
-                LSE : element.LSE,
-                NYSE : element.NYSE,
-                BTC_Volume : element.BTC_Volume,
-                LSE_Volume : element.LSE_Volume,
-                NYSE_Volume : element.NYSE_Volume
-            }
-        })
-    })
+    //CREATE ARRAYLIST FOR THE REQUIRED
+    let uploadData : CSVData[] = [];
     
+    for(let i =0; i< data.length; i ++)
+    {
+        let dataInsert : CSVData;
+        dataInsert = {
+            Date : data[i].Date,
+            BTC : data[i].BTC,
+            NYSE : data[i].NYSE,
+            LSE : data[i].LSE,
+            BTC_Volume : data[i].BTC_Volume,
+            NYSE_Volume : data[i].NYSE_Volume,
+            LSE_Volume : data[i].LSE_Volume
+        }
+        uploadData.push(dataInsert);
+    }
+    // DB INSERT
+    console.log(`Starting DATA insertion`)
+    await prisma.financeData.createMany(
+        {
+            data : uploadData
+        }
+    );
+    console.log(`Finished Data Load`)
+    prisma.$disconnect;
 }
 
 export {readExcelService, importDataJob, purgeDataService};
