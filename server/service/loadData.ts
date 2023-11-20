@@ -13,7 +13,7 @@ function readExcelService(): Promise<any[]> {
       const filePath: string = `Dataset.csv`;
       const data: any[] = [];
 
-      console.log(`Started file load from : ${filePath} : for processing`);
+      console.log(` > Started file load from : ${filePath} : for processing`);
 
       fs.createReadStream(filePath)
           .pipe(csvParser())
@@ -31,16 +31,16 @@ function readExcelService(): Promise<any[]> {
 
 // DELETE ALL DATA FROM DB TABLE
 async function purgeDataService() {
-    console.log(`Starting to purge all existing records`)
+    console.log(` > Starting to purge all existing records`)
     await deleteAllData();
 }
 
 // IMPORT DATA TO DB TABLE
 async function importDataJob() {
     await purgeDataService();
-    console.log(`Starting to import data to DB`)
+    console.log(` > Starting to import data to DB`)
     const data = await readExcelService();
-    console.log(`Fetched data from CSV`);
+    console.log(` > Fetched data from CSV`);
     
     //CREATE ARRAYLIST FOR THE REQUIRED
     let uploadData : CSVData[] = [];
@@ -60,9 +60,9 @@ async function importDataJob() {
         uploadData.push(dataInsert);
     }
     // DB INSERT
-    console.log(`Starting DATA insertion`)
+    console.log(` > Starting DATA insertion`)
     await insertAllData(uploadData);
-    console.log(`Finished Data Load`)
+    console.log(` > Finished Data Load`)
 }
 
 export {readExcelService, importDataJob, purgeDataService};
