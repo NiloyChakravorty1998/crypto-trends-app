@@ -5,7 +5,7 @@ import { CSVData } from '../interfaces/CSVData';
 const prisma = new PrismaClient();
 
 //GET DATA FOR VOLUME TREND BASED ON STARTDATE AND ENDDATE
-async function getVolumeTrend(startDate : string, endDate : string) {
+async function getTrend(startDate : string, endDate : string) {
     let data : CSVData [] = [];
 
     //PRISMA OPERATION TO GET RECORDS BETWEEN THE DATE RANGE
@@ -20,4 +20,16 @@ async function getVolumeTrend(startDate : string, endDate : string) {
     return data;
 }
 
-export default getVolumeTrend;
+async function getDailyTrend(date : string)
+{
+    let data : CSVData
+    //PRISMA OPERATION TO GET RECORDS BETWEEN THE DATE RANGE
+    data = await prisma.financeData.findFirstOrThrow({
+        where : {
+            Date : date
+        }
+    })
+    return data;
+}
+
+export  {getTrend, getDailyTrend};

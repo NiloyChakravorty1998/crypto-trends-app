@@ -1,11 +1,11 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { importDataJob } from '../service/loadData';
-import volRouter from '../routes/volumeTrend';
+import volRouter from '../routes/trend';
 
 //CONFIG
 dotenv.config();
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 //ROUTERS
-app.use('/trend/volume', volRouter);
+app.use('/trend', volRouter);
 
 //START SERVER 
 importDataJob().then( () => {
