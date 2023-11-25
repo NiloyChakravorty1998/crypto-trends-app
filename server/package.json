@@ -2,6 +2,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node build/app/server.js",
+    "build": "tsc",
     "devStart": "nodemon build/app/server.js"
   },
   "author": "Niloy Chakravorty",
@@ -23,6 +24,11 @@
     "helmet": "^7.1.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
-    "prisma": "^5.5.2"
+    "prisma": "^5.5.2",
+    "tsc": "^2.0.4",
+    "typescript": "^5.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.2"
   }
 }
